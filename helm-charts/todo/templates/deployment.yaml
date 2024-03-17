@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: todos-deployment
+  name: {{ .Chart.Name }}-deployment
   labels:
-    app: todos
+    app: {{ .Chart.Name }}
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: todos
+      app: {{ .Chart.Name }}
   template:
     metadata:
       labels:
-        app: todos
+        app: {{ .Chart.Name }}
     spec:
       initContainers:
-      - name: check
+      - name: db-migration
         image: postgres:latest
         env:
         - name: POSTGRESQL_DATABASE
@@ -48,11 +48,9 @@ spec:
         - name: DB_URL
           value: "postgres://$(POSTGRESQL_USER):$(POSTGRESQL_PASSWORD)@$(POSTGRESQL_ENDPOINT):5432/$(POSTGRESQL_DATABASE)?sslmode=disable"
         livenessProbe:
-          httpGet:
-            path: /alive
-            port: 8080
-          initialDelaySeconds: 15
-          periodSeconds: 10
+          {{- toYaml .Values.livenessProbe | nindent 10 }}
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
         ports:
         - name: app-port
           containerPort: 3000

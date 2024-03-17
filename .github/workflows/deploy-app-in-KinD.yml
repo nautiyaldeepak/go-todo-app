@@ -20,16 +20,6 @@ jobs:
       with:
         name: docker-image
         path: /tmp/todos.tar
-    - name: Login to Docker Hub
-      run: |
-        echo ${GITHUB_SHA::7}
-        cat helm-charts/todo/values.yaml
-        echo ${{ secrets.DB_USERNAME }}
-        echo ${{ secrets.DB_PASSWORD }}
-        sed -i 's/USERNAME/${{ secrets.DB_USERNAME }}/g' helm-charts/todo/values.yaml
-        sed -i 's/PASSWORD/${{ secrets.DB_PASSWORD }}/g' helm-charts/todo/values.yaml
-        sed -i 's/IMAGE_TAG/${{ github.sha }}/g' helm-charts/todo/values.yaml
-        cat helm-charts/todo/values.yaml
 
   deploy:
     runs-on: ubuntu-latest
