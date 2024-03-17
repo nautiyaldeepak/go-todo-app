@@ -23,11 +23,6 @@ type response struct {
 
 // create connection with postgres db
 func createConnection() *sql.DB {
-	// load .env file
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatalf("Error loading .env file.")
-	}
 
 	// Open the connection
 	db, err := sql.Open("postgres", os.Getenv("DB_URL"))
