@@ -28,7 +28,7 @@ jobs:
         echo ${{ secrets.DB_PASSWORD }}
         sed -i 's/USERNAME/${{ secrets.DB_USERNAME }}/g' helm-charts/todo/values.yaml
         sed -i 's/PASSWORD/${{ secrets.DB_PASSWORD }}/g' helm-charts/todo/values.yaml
-        sed -i 's/IMAGE_TAG/${GITHUB_SHA::7}/g' helm-charts/todo/values.yaml
+        sed -i 's/IMAGE_TAG/echo $(${GITHUB_SHA::7})/g' helm-charts/todo/values.yaml
         cat helm-charts/todo/values.yaml
         sed
 
