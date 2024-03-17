@@ -55,5 +55,6 @@ jobs:
           kubectl get all
           echo "++++++++++++++++++++++++++++++++++++++++++"
           echo "++++++++++++++++++++++++++++++++++++++++++"
-          sleep 300
+          echo "Sleeping for 3 mins. Waiting for resources to be fully deployed."
+          sleep 180
           kubectl get all
