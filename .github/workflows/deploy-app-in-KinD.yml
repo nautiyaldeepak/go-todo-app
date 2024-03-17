@@ -11,15 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    # - name: Build the Docker image
-    #   run: docker build . --file Dockerfile --tag todos:v1
-    # - name: Save Docker image as tarball
-    #   run: docker save -o /tmp/todos.tar todos:v1
-    # - name: Upload Docker image as artifact
-    #   uses: actions/upload-artifact@v2
-    #   with:
-    #     name: docker-image
-    #     path: /tmp/todos.tar
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag todos:${{ github.sha }}
+    - name: Save Docker image as tarball
+      run: docker save -o /tmp/todos.tar todos:${{ github.sha }}
+    - name: Upload Docker image as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: docker-image
+        path: /tmp/todos.tar
     - name: Login to Docker Hub
       run: |
         echo ${GITHUB_SHA::7}
@@ -28,7 +28,7 @@ jobs:
         echo ${{ secrets.DB_PASSWORD }}
         sed -i 's/USERNAME/${{ secrets.DB_USERNAME }}/g' helm-charts/todo/values.yaml
         sed -i 's/PASSWORD/${{ secrets.DB_PASSWORD }}/g' helm-charts/todo/values.yaml
-        sed -i 's/IMAGE_TAG/${{GITHUB_SHA::7}}/g' helm-charts/todo/values.yaml
+        sed -i 's/IMAGE_TAG/${{ github.sha }}/g' helm-charts/todo/values.yaml
         cat helm-charts/todo/values.yaml
         sed
 
