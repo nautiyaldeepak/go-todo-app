@@ -48,7 +48,7 @@ jobs:
       - name: Install helm charts
         run: |
           helm version
-          helm install notes helm-charts/notes/
+          helm install notes helm-charts/todo/
           kubectl get all
           echo "++++++++++++++++++++++++++++++++++++++++++"
           echo "++++++++++++++++++++++++++++++++++++++++++"
