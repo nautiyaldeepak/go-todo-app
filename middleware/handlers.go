@@ -12,7 +12,6 @@ import (
 	"text/template"
 
 	"github.com/gorilla/mux"
-	"github.com/joho/godotenv"
 	_ "github.com/lib/pq" // postgres golang driver
 )
 
@@ -149,7 +148,7 @@ func DeleteTodo(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(res)
 }
 
-//------------------------- handler functions ----------------
+// ------------------------- handler functions ----------------
 // get list todo from the DB
 func getAllTodos() ([]models.Todo, error) {
 	// create db connection
