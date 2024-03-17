@@ -31,7 +31,7 @@ Update values.yaml file
 
 Deploy helm-charts
 ```
-helm install todos helm-chart/todo/
+helm install todos helm-charts/todo/
 ```
 
 ## Issues
