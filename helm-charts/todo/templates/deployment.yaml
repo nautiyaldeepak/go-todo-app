@@ -32,14 +32,14 @@ spec:
         ]
       containers:
       - name: todos
-        image: nautiyaldeepak/todos:v4
+        image: nautiyaldeepak/todos:v5
         imagePullPolicy: Always
         envFrom:
         - secretRef:
             name: todos-secret
         env:
         - name: DB_URL
-          value: "postgres://test-user:abc123d@todos-poesql.default.svc.cluster.local:5432/todos-db?sslmode=disable"
+          value: "postgres://test-user:abc123d@todos-postgresql.default.svc.cluster.local:5432/todos-db?sslmode=disable"
         livenessProbe:
           httpGet:
             path: /alive
