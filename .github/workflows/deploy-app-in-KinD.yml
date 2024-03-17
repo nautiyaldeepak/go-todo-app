@@ -16,7 +16,7 @@ jobs:
     - name: Save Docker image as tarball
       run: docker save -o /tmp/todos.tar todos:${{ github.sha }}
     - name: Upload Docker image as artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: docker-image
         path: /tmp/todos.tar
@@ -26,19 +26,17 @@ jobs:
     needs: build
     steps:
       - name: Download Docker image tarball artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: docker-image
           path: /tmp
       - name: Load Docker image from tarball
         run: |
           docker load --input /tmp/todos.tar
-          docker image ls -a
       - name: Create k8s Kind Cluster
         uses: helm/kind-action@v1 
       - name: Run KinD commands
         run: |
-          kind version
           kind get clusters
           kind load docker-image todos:${{ github.sha }} --name chart-testing
       - name: Copying helm chart from repository
@@ -48,11 +46,12 @@ jobs:
           sparse-checkout-cone-mode: false
       - name: Install helm charts
         run: |
-          helm version
           sed -i 's/USERNAME/${{ secrets.DB_USERNAME }}/g' helm-charts/todo/values.yaml
           sed -i 's/PASSWORD/${{ secrets.DB_PASSWORD }}/g' helm-charts/todo/values.yaml
           sed -i 's/IMAGE_TAG/${{ github.sha }}/g' helm-charts/todo/values.yaml
           helm install todos helm-charts/todo/
+      - name: Visualization # This step this not necessary, it is being done just for visibility 
+        run: |
           kubectl get all
           echo "++++++++++++++++++++++++++++++++++++++++++"
           echo "++++++++++++++++++++++++++++++++++++++++++"
