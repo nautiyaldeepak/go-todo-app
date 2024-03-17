@@ -53,8 +53,8 @@ jobs:
       - name: Visualization # This step this not necessary, it is being done just for visibility 
         run: |
           kubectl get all
-          echo "++++++++++++++++++++++++++++++++++++++++++"
-          echo "++++++++++++++++++++++++++++++++++++++++++"
-          echo "Sleeping for 1 mins. Waiting for resources to be fully deployed."
-          sleep 60
+          echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+          echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+          echo "Sleeping for 2 mins. Waiting for resources to be fully deployed."
+          sleep 120
           kubectl get all
