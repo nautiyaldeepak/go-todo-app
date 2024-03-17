@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todos-deployment
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: "/metrics"
+    prometheus.io/port: "2112"
+  labels:
+    app.kubernetes.io/part-of: prom-sm
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: todos
+  template:
+    metadata:
+      labels:
+        app: todos
+    spec:
+      initContainers:
+      - name: check
+        image: postgres:latest
+        env:
+        - name: PGPASSWORD
+          value: "abc123d"
+        command: ['sh', '-c', 
+            'until pg_isready -h todos-postgresql.default.svc.cluster.local -p 5432; 
+            do echo waiting for database; sleep 2; done;
+            PGPASSWORD=$PGPASSWORD psql -h todos-postgresql.default.svc.cluster.local -U test-user -d todos-db -c "CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";"
+            PGPASSWORD=$PGPASSWORD psql -h todos-postgresql.default.svc.cluster.local -U test-user -d todos-db -c "CREATE TABLE IF NOT EXISTS todos (id UUID NOT NULL DEFAULT uuid_generate_v4(), text TEXT, checked BOOLEAN);"'
+        ]
+      containers:
+      - name: todos
+        image: nautiyaldeepak/todos:v4
+        imagePullPolicy: Always
+        envFrom:
+        - secretRef:
+            name: todos-secret
+        env:
+        - name: DB_URL
+          value: "postgres://test-user:abc123d@todos-poesql.default.svc.cluster.local:5432/todos-db?sslmode=disable"
+        livenessProbe:
+          httpGet:
+            path: /alive
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 10
+        ports:
+        - name: app-port
+          containerPort: 3000

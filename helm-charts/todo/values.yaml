@@ -1,0 +1,10 @@
+postgresql:
+  enabled: true
+  volumePermissions:
+    enabled: true
+  global:
+    postgresql:
+      auth:
+        username: "test-user"
+        password: "abc123d"
+        database: "todos-db"
