@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Chart.Name }}-deployment
+  name: {{ .Release.Name }}-deployment
   labels:
-    app: {{ .Chart.Name }}
+    app: {{ .Release.Name }}
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: {{ .Chart.Name }}
+      app: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ .Chart.Name }}
+        app: {{ .Release.Name }}
     spec:
       initContainers:
       - name: db-migration
@@ -25,7 +25,7 @@ spec:
         - name: PGPASSWORD  # Special env variables used for postgres
           value: {{ .Values.postgresql.global.postgresql.auth.password }}
         - name: POSTGRESQL_ENDPOINT
-          value: {{ .Values.postgresqlEndpoint }}
+          value: "{{ .Release.Name }}-postgresql.default.svc.cluster.local"
         command: ['sh', '-c', 
             'until pg_isready -h $POSTGRESQL_ENDPOINT -p 5432; 
             do echo waiting for database; sleep 2; done;
@@ -44,7 +44,7 @@ spec:
         - name: POSTGRESQL_PASSWORD
           value: {{ .Values.postgresql.global.postgresql.auth.password }}
         - name: POSTGRESQL_ENDPOINT
-          value: {{ .Values.postgresqlEndpoint }}
+          value: "{{ .Release.Name }}-postgresql.default.svc.cluster.local"
         - name: DB_URL
           value: "postgres://$(POSTGRESQL_USER):$(POSTGRESQL_PASSWORD)@$(POSTGRESQL_ENDPOINT):5432/$(POSTGRESQL_DATABASE)?sslmode=disable"
         livenessProbe:

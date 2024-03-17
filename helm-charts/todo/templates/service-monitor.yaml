@@ -1,9 +1,9 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ .Chart.Name }}-service-monitor
+  name: {{ .Release.Name }}-service-monitor
   labels:
-    app.kubernetes.io/part-of: {{ .Chart.Name }}-sm
+    app.kubernetes.io/part-of: {{ .Release.Name }}-sm
 spec:
   endpoints:
     - interval: 15s
@@ -11,4 +11,4 @@ spec:
       scrapeTimeout: 14s
   selector:
     matchLabels:
-      app.kubernetes.io/part-of: {{ .Chart.Name }}-sm
+      app.kubernetes.io/part-of: {{ .Release.Name }}-sm

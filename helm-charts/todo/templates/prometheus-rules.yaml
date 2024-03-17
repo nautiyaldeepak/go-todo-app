@@ -1,9 +1,9 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: {{ .Chart.Name }}-alert-rules
+  name: {{ .Release.Name }}-alert-rules
   label:
-    app: {{ .Chart.Name }}
+    app: {{ .Release.Name }}
 spec:
   groups:
   - name: todosAlertRules
