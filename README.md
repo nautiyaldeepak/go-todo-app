@@ -1,7 +1,7 @@
 # Golang To-do App | Userlane
 
 ## Overview
-> Simple To-do App with postgres Backend̃̃
+> Simple To-do App with postgres Backend
 - This is our to-do app developed in golang. The app will run on `port=3000`. The app will use a postgres DB in the backend to store all app items.
 - The application has been instrumented to generate metrics. It is generating 3 important metrics `Requests`, `Error Codes`, `Duration`. These are very well know RED metrics. We'll use these metrics to generate alerts for our app, alerts like - `4xxErrorsCount`, `5xxErrorCount`, `Latency`, `NetworkThroughput`. These metrics are exposed on `port=3000` & `path=/metrics`.
 - In the app we've also created a `health check` endpoint running on `port 8080`. This will later be used for `livenessProbe`.
@@ -33,3 +33,6 @@ Deploy helm-charts
 ```
 helm install todos helm-chart/todo/
 ```
+
+## Issues
+- In order to deploy `service-monitor` & `prometheus-rules` custom resource, we're deploying prometheus-operator, I tried deploy `prometheus-operator-crds` helm chart, it was giving some issues, that's why I had to move forward with deloying prometheus-operator.
