@@ -89,7 +89,7 @@ func main() {
 	r.Use(prometheusMiddleware)
 
 	// Prometheus endpoint
-	r.Path("/prometheus").Handler(promhttp.Handler())
+	r.Path("/metrics").Handler(promhttp.Handler())
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
 
 	fmt.Println("Starting server on the port 3000...")
