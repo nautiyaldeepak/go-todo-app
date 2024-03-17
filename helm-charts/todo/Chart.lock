@@ -2,5 +2,8 @@ dependencies:
 - name: postgresql
   repository: oci://registry-1.docker.io/bitnamicharts
   version: 14.3.3
-digest: sha256:fa1b617a02b8d998214c74236302bcbf664aebcc6ca3e7cc279af3994fd2aee4
-generated: "2024-03-17T11:56:46.23029+05:30"
+- name: kube-prometheus
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 8.30.1
+digest: sha256:02702967160495f74d3e72f444417371b632bc89cd62ffb9a4bc39f31f403b92
+generated: "2024-03-17T18:51:51.776271+05:30"

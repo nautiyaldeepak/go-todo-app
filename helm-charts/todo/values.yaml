@@ -1,3 +1,8 @@
+kube-prometheus:
+  enabled: true
+# prometheus-operator-crds:
+#   enabled: true
+
 postgresql:
   enabled: true
   volumePermissions:
@@ -8,3 +13,5 @@ postgresql:
         username: "test-user"
         password: "abc123d"
         database: "todos-db"
+
+postgresqlEndpoint: todos-postgresql.default.svc.cluster.local
