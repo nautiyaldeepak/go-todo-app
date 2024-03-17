@@ -10,8 +10,12 @@ postgresql:
   global:
     postgresql:
       auth:
-        username: "test-user"
-        password: "abc123d"
+        username: USERNAME
+        password: PASSWORD
         database: "todos-db"
 
 postgresqlEndpoint: todos-postgresql.default.svc.cluster.local
+image:
+  repository: todos
+  tag: IMAGE_TAG
+  imagePullPolicy: Never

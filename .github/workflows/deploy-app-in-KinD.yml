@@ -24,7 +24,11 @@ jobs:
       run: |
         echo ${{ secrets.DB_USERNAME }}
         echo ${{ secrets.DB_PASSWORD }}
-        echo "${{ github.sha }}" | cut -c1-6
+        sed -i 's/USERNAME/${{ secrets.DB_USERNAME }}/g' helm-charts/todo/values.yaml
+        sed -i 's/PASSWORD/${{ secrets.DB_PASSWORD }}/g' helm-charts/todo/values.yaml
+        cat helm-charts/todo/values.yaml
+        # HASH=$(${{ github.sha }} | cut -c1-6)
+        # sed -i 's/IMAGE_TAG/NEW_VAR/g' helm-charts/todo/values.yaml
         sed
 
   # deploy:
@@ -55,6 +59,7 @@ jobs:
   #     - name: Install helm charts
   #       run: |
   #         helm version
+  #         sed -i 's/IMAGE_TAG/NEW_VAR/g' helm-charts/todo/values.yaml
   #         helm install todos helm-charts/todo/
   #         kubectl get all
   #         echo "++++++++++++++++++++++++++++++++++++++++++"

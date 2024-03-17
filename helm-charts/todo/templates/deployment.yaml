@@ -34,8 +34,8 @@ spec:
         ]
       containers:
       - name: todos
-        image: nautiyaldeepak/todos:v6
-        imagePullPolicy: Always
+        image: todos:v1
+        imagePullPolicy: Never
         env:
         - name: POSTGRESQL_DATABASE
           value: {{ .Values.postgresql.global.postgresql.auth.database }}
