@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: todos-service-monitor
+  labels:
+    app.kubernetes.io/part-of: todos-sm
+spec:
+  endpoints:
+    - interval: 15s
+      port: metrics
+      scrapeTimeout: 14s
+  selector:
+    matchLabels:
+      app.kubernetes.io/part-of: todos-sm

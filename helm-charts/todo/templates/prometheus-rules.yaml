@@ -1,0 +1,58 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: todos-alert-rules
+  label:
+    app: todos
+spec:
+  groups:
+  - name: todosAlertRules
+    rules:
+    - alert: HighRequestRate
+      expr: sum(rate(http_requests_total{job="todos-service",path=~"/api.*"}[2m])) > 100
+      for: 2m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High request rate detected"
+        description: "The HTTP request rate for /api endpoints is higher than 100 requests per second."
+    - alert: High4xxErrors
+      expr: sum(count_over_time(response_status{job="todos-service", status=~"4.*"}[5m])) > 100
+      for: 2m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High 4xx Errors Detected"
+        description: "The number of 4xx errors is high for the todos-service job."
+    - alert: High5xxErrors
+      expr: sum(count_over_time(response_status{job="todos-service", status=~"5.*"}[5m])) > 100
+      for: 2m
+      labels:
+        severity: critical
+      annotations:
+        summary: "High 5xx Errors Detected"
+        description: "The number of 5xx errors is high for the todos-service job."
+    - alert: HighP99LatencyAlert
+      expr: histogram_quantile(0.99, rate(http_response_time_seconds_bucket{job="todos-service", path=~"/api/.*"}[5m])) > 1.0
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        summary: "High 99th Percentile Latency Detected"
+        description: "The 99th percentile latency for /api/ requests in the last 5 minutes is greater than 1 second."
+    - alert: HighP95LatencyAlert
+      expr: histogram_quantile(0.95, rate(http_response_time_seconds_bucket{job="todos-service", path=~"/api/.*"}[5m])) > 0.5
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        summary: "High 95th Percentile Latency Detected"
+        description: "The 95th percentile latency for /api/ requests in the last 5 minutes is greater than 0.5 seconds."
+    - alert: HighP90LatencyAlert
+      expr: histogram_quantile(0.90, rate(http_response_time_seconds_bucket{job="todos-service", path=~"/api/.*"}[5m])) > 0.1
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High 90th Percentile Latency Detected"
+        description: "The 90th percentile latency for /api/ requests in the last 5 minutes is greater than 0.1 seconds."
