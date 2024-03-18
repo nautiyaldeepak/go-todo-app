@@ -34,6 +34,14 @@ Deploy helm-charts
 helm install todos helm-charts/todo/
 ```
 
-## Few Additional Points
+## Run the app locally (Optional / For local testing)
+> Note: To run the app locally, you'll first need to run a postgres DB and provide its URL in env variables.
+Export postgreSQL URL & execute go program
+```
+export DB_URL=postgres://<USER_NAME>:<USER_PASSWORD>@<DB_HOST>:5432/<DATABASE_NAME>?sslmode=disable
+go run main.go
+```
+
+## Additional Points
 - In order to deploy `service-monitor` & `prometheus-rules` custom resource, we're deploying prometheus-operator, I tried deploy `prometheus-operator-crds` helm chart, it was giving some issues, that's why I had to move forward with deloying prometheus-operator.
 - In the github workflow, there is a step in deploy with the name `Visualization`. This step is not necessary. This is included so that all resources could be viewed once they are up and running. This step increases the duration of deploy job by 2 mins.

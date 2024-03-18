@@ -15,5 +15,5 @@ func Healthcheck() string {
 			panic(err)
 		}
 	}()
-	return "health check enabled [ port=8080, path=/alive ]"
+	return "health endpoint enabled [ port=8080, path=/alive ]"
 }
