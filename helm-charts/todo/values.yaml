@@ -28,6 +28,6 @@ resources:
 livenessProbe:
   httpGet:
     path: /alive
-    port: 8080
+    port: 3000
   initialDelaySeconds: 15
   periodSeconds: 10
