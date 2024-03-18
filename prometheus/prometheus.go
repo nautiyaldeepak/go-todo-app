@@ -44,7 +44,7 @@ var httpDuration = promauto.NewHistogramVec(prometheus.HistogramOpts{
 	Help: "Duration of HTTP requests.",
 }, []string{"path"})
 
-func PrometheusMiddleware(next http.Handler) http.Handler {
+func Metrics(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		route := mux.CurrentRoute(r)
 		path, _ := route.GetPathTemplate()
