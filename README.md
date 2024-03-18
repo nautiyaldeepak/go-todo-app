@@ -45,3 +45,4 @@ go run main.go
 ## Additional Points
 - In order to deploy `service-monitor` & `prometheus-rules` custom resource, we're deploying prometheus-operator, I tried deploy `prometheus-operator-crds` helm chart, it was giving some issues, that's why I had to move forward with deloying prometheus-operator.
 - In the github workflow, there is a step in deploy with the name `Visualization`. This step is not necessary. This is included so that all resources could be viewed once they are up and running. This step increases the duration of deploy job by 2 mins.
+- I've kept only 1 values file for helm-charts for simplicity. In a proper prod environment, we would have different values file for different environments. 
