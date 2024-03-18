@@ -9,5 +9,4 @@ FROM alpine:3.19.1
 COPY --from=builder /app ./app
 WORKDIR app
 EXPOSE 3000
-EXPOSE 8080
 CMD ["./goapp"]
