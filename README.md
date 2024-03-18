@@ -3,8 +3,8 @@
 ## Overview
 > Simple To-do App with postgres Backend
 - This is our to-do app developed in golang. The app will run on `port=3000`. The app will use a postgres DB in the backend to store all app items.
-- The application has been instrumented to generate metrics. It is generating 3 important metrics `Requests`, `Error Codes`, `Duration`. These are very well know RED metrics. We'll use these metrics to generate alerts for our app, alerts like - `4xxErrorsCount`, `5xxErrorCount`, `Latency`, `NetworkThroughput`. These metrics are exposed on `port=3000` & `path=/metrics`.
-- In the app we've also created a `health check` endpoint running on `port 8080`. This will later be used for `livenessProbe`.
+- The application has been instrumented to generate metrics. It is generating 3 important metrics `Requests`, `Error Codes`, `Duration`. These are very well know [RED metrics](https://grafana.com/blog/2018/08/02/the-red-method-how-to-instrument-your-services/). We'll use these metrics to generate alerts for our app, alerts like - `4xxErrorsCount`, `5xxErrorCount`, `Latency`, `NetworkThroughput`. These metrics are exposed on `port=3000` & `path=/metrics`.
+- In the app we've also created a `health check` endpoint running on `port=8080` & `path=/alive`. This endpoint is used in k8s for `liveness probe`. 
 - Dockerfile is also created to containerize our app. We've used multistage build to create a light image.
 - Via helm charts we're deploying single instance `postgresql` database. Then we're deploying our go app, the app also has an initContainer for database migration.
 - Helm charts also deploy `service` for exposing our go app, an `ingress` resource is also deployed. as part of our observability stack we're also deploying `service Monitor` & `prometheus rules` custom resource.
