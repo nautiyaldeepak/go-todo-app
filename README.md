@@ -36,9 +36,21 @@ helm install todos helm-charts/todo/
 
 ## Run the app locally (Optional / For local testing)
 > Note: To run the app locally, you'll first need to run a postgres DB and provide its URL in env variables.
-Export postgreSQL URL & execute go program
+Export postgreSQL URL
 ```
 export DB_URL=postgres://<USER_NAME>:<USER_PASSWORD>@<DB_HOST>:5432/<DATABASE_NAME>?sslmode=disable
+```
+Carry out DB migrations
+```
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE TABLE IF NOT EXISTS todos (
+  id UUID NOT NULL DEFAULT uuid_generate_v4(),
+  text TEXT,
+  checked BOOLEAN
+);
+```
+Run app
+```
 go run main.go
 ```
 
