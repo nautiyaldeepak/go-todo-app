@@ -3,8 +3,8 @@ name: Deploy App in KinD
 on:
   push:
     branches:
-      - 'main'
-      - 'master'
+      - 'trd'
+      - 'test'
 
 jobs:
   build:
