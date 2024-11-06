@@ -117,7 +117,7 @@ jobs:
                       full_local_path = os.path.join(root, file_name)
                       # Construct the remote path within the GitHub repo
                       relative_path = os.path.relpath(full_local_path, local_dir)
-                      full_remote_path = os.path.join(remote_dir, relative_path).replace("\", "/")
+                      full_remote_path = os.path.join(remote_dir, relative_path).replace("\\", "/")
                       
                       upload_file_to_github(full_local_path, full_remote_path)
                       print(f"Uploaded {full_remote_path}")
